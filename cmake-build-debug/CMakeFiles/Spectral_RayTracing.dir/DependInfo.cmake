@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/UEC/UECRayTracing/Spectral_RayTracing/main.cpp" "D:/UEC/UECRayTracing/Spectral_RayTracing/cmake-build-debug/CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj"
+  "D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp" "D:/UEC/UECRayTracing/Spectral_RayTracing/cmake-build-debug/CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

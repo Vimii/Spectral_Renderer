@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj"
+  "CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj"
   "Spectral_RayTracing.exe"
   "Spectral_RayTracing.exe.manifest"
   "Spectral_RayTracing.pdb"

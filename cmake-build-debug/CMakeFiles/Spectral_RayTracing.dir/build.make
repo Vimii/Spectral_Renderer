@@ -75,27 +75,27 @@ include CMakeFiles/Spectral_RayTracing.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Spectral_RayTracing.dir/flags.make
 
-CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj: CMakeFiles/Spectral_RayTracing.dir/flags.make
-CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\UEC\UECRayTracing\Spectral_RayTracing\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Spectral_RayTracing.dir\main.cpp.obj -c D:\UEC\UECRayTracing\Spectral_RayTracing\main.cpp
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: CMakeFiles/Spectral_RayTracing.dir/flags.make
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\UEC\UECRayTracing\Spectral_RayTracing\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Spectral_RayTracing.dir\src\main.cpp.obj -c D:\UEC\UECRayTracing\Spectral_RayTracing\src\main.cpp
 
-CMakeFiles/Spectral_RayTracing.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Spectral_RayTracing.dir/main.cpp.i"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\UEC\UECRayTracing\Spectral_RayTracing\main.cpp > CMakeFiles\Spectral_RayTracing.dir\main.cpp.i
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\UEC\UECRayTracing\Spectral_RayTracing\src\main.cpp > CMakeFiles\Spectral_RayTracing.dir\src\main.cpp.i
 
-CMakeFiles/Spectral_RayTracing.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Spectral_RayTracing.dir/main.cpp.s"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\UEC\UECRayTracing\Spectral_RayTracing\main.cpp -o CMakeFiles\Spectral_RayTracing.dir\main.cpp.s
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\UEC\UECRayTracing\Spectral_RayTracing\src\main.cpp -o CMakeFiles\Spectral_RayTracing.dir\src\main.cpp.s
 
 # Object files for target Spectral_RayTracing
 Spectral_RayTracing_OBJECTS = \
-"CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj"
+"CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj"
 
 # External object files for target Spectral_RayTracing
 Spectral_RayTracing_EXTERNAL_OBJECTS =
 
-Spectral_RayTracing.exe: CMakeFiles/Spectral_RayTracing.dir/main.cpp.obj
+Spectral_RayTracing.exe: CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj
 Spectral_RayTracing.exe: CMakeFiles/Spectral_RayTracing.dir/build.make
 Spectral_RayTracing.exe: CMakeFiles/Spectral_RayTracing.dir/linklibs.rsp
 Spectral_RayTracing.exe: CMakeFiles/Spectral_RayTracing.dir/objects1.rsp

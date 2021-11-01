@@ -80,7 +80,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/main.cpp">
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/util.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/vec3.h">
 			<Option target="Spectral_RayTracing"/>
 		</Unit>
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/CMakeLists.txt">
