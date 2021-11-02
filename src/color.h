@@ -15,6 +15,22 @@ struct RGBA {
     constexpr RGBA(const unsigned char r_, const unsigned char g_, const unsigned char b_, const unsigned char a_) :r(r_), g(g_), b(b_), a(a_) {}
 };
 
+color xyz_to_srgb(const color &xyz) {
+    return color(
+            3.240479f * xyz.x() -1.537150f * xyz.x() - 0.498535f * xyz.x(),
+            -0.969256f * xyz.y() + 1.875991f * xyz.y() + 0.041556f * xyz.y(),
+            0.055648f * xyz.z() -0.204043f * xyz.z() + 1.057311f * xyz.z()
+            );
+}
+
+color srgb_to_xyz(const color &rgb){
+    return color(
+            0.412453f * rgb.x() + 0.357580f * rgb.x() + 0.180423f * rgb.x(),
+            0.212671f * rgb.y() + 0.715160f * rgb.y() + 0.072169f * rgb.y(),
+            0.019334f * rgb.z() + 0.119193f * rgb.z() + 0.950227f * rgb.z()
+    );
+}
+
 void write_color(struct RGBA &out , color pixel_color, int samples_per_pixel) {
     auto r = pixel_color.x();
     auto g = pixel_color.y();

@@ -6,11 +6,24 @@
 #include "time.h"
 #include "util.h"
 #include "filename.h"
+#include "spectrum.h"
+#include "d65.h"
+#include <string.h>
 
 color ray_color(const ray& r, const color& background, int depth) {
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
     return (1.0-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
+}
+
+spectrum ray_spectrum(const ray& r, int depth){
+    vec3 unit_direction = unit_vector(r.direction());
+    auto t = 0.5*(unit_direction.y() + 1.0);
+    spectrum ray;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        ray.value[i] = d65.value[i] * (t*cie1931_z_data[i] + (1.0 - t)*cie1931_x_data[i])*10.f;
+    }
+    return ray;
 }
 
 
@@ -44,13 +57,15 @@ int main() {
 #pragma omp parallel for
         for(int i = 0; i < image_width; ++i){
             color pixel_color(0,0,0);
-#pragma omp parallel for
-            for(int s = 0; s < sample_per_pixel; ++s){
+            spectrum pixel_spectrum;
+//#pragma omp parallel for
+//            for(int s = 0; s < sample_per_pixel; ++s){
                 auto u = (i + random_double())/(image_width-1);
                 auto v = (j + random_double())/(image_height-1);
                 ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
-                pixel_color += ray_color(r,background,max_depth);
-            }
+                pixel_spectrum = ray_spectrum(r,max_depth);
+//            }
+            pixel_color = xyz_to_srgb(spectrum_to_xyz(pixel_spectrum));
             write_color(rgba[image_height-1-j][i], pixel_color, sample_per_pixel);
         }
     }

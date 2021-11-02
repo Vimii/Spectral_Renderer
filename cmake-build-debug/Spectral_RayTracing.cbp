@@ -83,7 +83,13 @@
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h">
 			<Option target="Spectral_RayTracing"/>
 		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/d65.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/spectrum.h">
 			<Option target="Spectral_RayTracing"/>
 		</Unit>
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/util.h">

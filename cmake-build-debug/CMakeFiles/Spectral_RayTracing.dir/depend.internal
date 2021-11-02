@@ -3,9 +3,11 @@
 
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h
+ D:/UEC/UECRayTracing/Spectral_RayTracing/src/d65.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/filename.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/ray.h
+ D:/UEC/UECRayTracing/Spectral_RayTracing/src/spectrum.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/util.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/vec3.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/stb-master/stb_image_write.h
