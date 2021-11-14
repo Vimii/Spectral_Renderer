@@ -17,9 +17,105 @@
 #  define SAMPLE_NUM 95
 #endif
 
-struct spectrum{
-    float value[SAMPLE_NUM];
+#include <algorithm>
+#include "d65.h"
+
+enum SPEC_TYPE{
+    EMPTY,
+    RED,
+    GREEN,
+    BLUE,
+    D65
 };
+
+class spectrum{
+public:
+    spectrum() : e{0}{}
+    spectrum(SPEC_TYPE) : e{/*初期化関数*/}{}
+
+    float operator[](int i) const { return e[i];}
+    float& operator[](int i){ return e[i];}
+
+    spectrum& operator+=(const spectrum &s){
+        for (int i = 0; i < SAMPLE_NUM; ++i)
+            e[i] += s.e[i];
+        return *this;
+    }
+
+    spectrum& operator*=(const double t) {
+        for (float v : e)
+            v *= t;
+        return *this;
+    }
+
+    spectrum& operator/=(const double t) {
+        return *this *= 1/t;
+    }
+
+    float max_intensity() const{
+        return *std::max_element(e,e+SAMPLE_NUM);
+    }
+
+public:
+    float e[SAMPLE_NUM];
+};
+
+//util
+
+inline spectrum operator+(const spectrum &u, const spectrum &v){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = u.e[i] + v.e[i];
+    }
+    return result;
+}
+
+inline spectrum operator-(const spectrum &u, const spectrum &v){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = u.e[i] - v.e[i];
+    }
+    return result;
+}
+
+inline spectrum operator*(const spectrum &u, const spectrum &v){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = u.e[i] * v.e[i];
+    }
+    return result;
+}
+
+inline spectrum operator*(double t, const spectrum &v){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = t * v.e[i];
+    }
+    return result;
+}
+
+
+inline spectrum operator*(const spectrum &v, double t){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = t * v.e[i];
+    }
+    return result;
+}
+
+inline spectrum operator/(const spectrum &v, double t){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = (1/t) * v.e[i];
+    }
+    return result;
+}
+
+inline spectrum ratio_spectrum(spectrum v){
+    return v / v.max_intensity();
+}
+
+
 
 /*CIEのxyz等色関数*/
 using Float = float;
@@ -105,6 +201,31 @@ const Float *cie1931_x_data = cie1931_tbl;
 const Float *cie1931_y_data = cie1931_tbl + SAMPLE_NUM;
 const Float *cie1931_z_data = cie1931_tbl + SAMPLE_NUM * 2;
 
+spectrum spectrum_type(SPEC_TYPE st){
+    spectrum result;
+    switch (st) {
+        case EMPTY:
+            break;
+        case RED:
+            for (int i = 0; i < SAMPLE_NUM; ++i)
+                result.e[i] = cie1931_x_data[i];
+            break;
+        case GREEN:
+            for (int i = 0; i < SAMPLE_NUM; ++i)
+                result.e[i] = cie1931_y_data[i];
+            break;
+        case BLUE:
+            for (int i = 0; i < SAMPLE_NUM; ++i)
+                result.e[i] = cie1931_z_data[i];
+            break;
+        case D65:
+            for (int i = 0; i < SAMPLE_NUM; ++i)
+                result.e[i] = d65_data[i];
+            break;
+    }
+    return result;
+}
+
 inline const float xyz_k(){
     return 21.371408462524414;
 }
@@ -114,9 +235,9 @@ inline color spectrum_to_xyz(spectrum sp){
 
     for(int i=0;i<SAMPLE_NUM;i++)
         xyz += color(
-                sp.value[i] * cie1931_x_data[i],
-                sp.value[i] * cie1931_y_data[i],
-                sp.value[i] * cie1931_z_data[i]
+                sp.e[i] * cie1931_x_data[i],
+                sp.e[i] * cie1931_y_data[i],
+                sp.e[i] * cie1931_z_data[i]
                 );
 
     xyz = color(xyz.x() / xyz_k(),
@@ -126,6 +247,5 @@ inline color spectrum_to_xyz(spectrum sp){
 
     return xyz;
 }
-
 
 #endif //SPECTRAL_RAYTRACING_SPECTRUM_H

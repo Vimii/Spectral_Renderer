@@ -21,7 +21,7 @@ spectrum ray_spectrum(const ray& r, int depth){
     auto t = 0.5*(unit_direction.y() + 1.0);
     spectrum ray;
     for (int i = 0; i < SAMPLE_NUM; ++i) {
-        ray.value[i] = d65.value[i] * (t*cie1931_z_data[i] + (1.0 - t)*cie1931_x_data[i])*10.f;
+        ray.e[i] = d65_data[i] * (t*cie1931_z_data[i] + (1.0 - t)*cie1931_x_data[i])*10.f;
     }
     return ray;
 }
