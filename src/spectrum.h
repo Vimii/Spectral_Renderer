@@ -19,13 +19,14 @@
 
 #include <algorithm>
 #include "d65.h"
+#include "color.h"
 
 enum SPEC_TYPE{
-    EMPTY,
-    RED,
-    GREEN,
-    BLUE,
-    D65
+    _EMPTY,
+    _RED,
+    _GREEN,
+    _BLUE,
+    _D65
 };
 
 class spectrum{
@@ -115,7 +116,13 @@ inline spectrum ratio_spectrum(spectrum v){
     return v / v.max_intensity();
 }
 
-
+inline spectrum const_spectrum(float v){
+    spectrum result;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        result.e[i] = v;
+    }
+    return result;
+}
 
 /*CIEのxyz等色関数*/
 using Float = float;
@@ -204,27 +211,38 @@ const Float *cie1931_z_data = cie1931_tbl + SAMPLE_NUM * 2;
 spectrum spectrum_type(SPEC_TYPE st){
     spectrum result;
     switch (st) {
-        case EMPTY:
+        case _EMPTY:
             break;
-        case RED:
-            for (int i = 0; i < SAMPLE_NUM; ++i)
-                result.e[i] = cie1931_x_data[i];
+        case _RED:
+            for (int i = 0; i < SAMPLE_NUM; ++i){
+                color r = srgb_to_xyz(color(xyz_to_srgb(color(cie1931_x_data[i],cie1931_y_data[i],cie1931_z_data[i])).x(),0,0));
+                result.e[i] = r.x() + r.y() + r.z();
+            }
             break;
-        case GREEN:
-            for (int i = 0; i < SAMPLE_NUM; ++i)
-                result.e[i] = cie1931_y_data[i];
+        case _GREEN:
+            for (int i = 0; i < SAMPLE_NUM; ++i) {
+                color g = srgb_to_xyz(color(0, xyz_to_srgb(color(cie1931_x_data[i], cie1931_y_data[i], cie1931_z_data[i])).y(),0));
+                result.e[i] = g.x() + g.y() + g.z();
+            }
             break;
-        case BLUE:
-            for (int i = 0; i < SAMPLE_NUM; ++i)
-                result.e[i] = cie1931_z_data[i];
+        case _BLUE:
+            for (int i = 0; i < SAMPLE_NUM; ++i) {
+                color b = srgb_to_xyz(color(0, 0, xyz_to_srgb(color(cie1931_x_data[i], cie1931_y_data[i], cie1931_z_data[i])).z()));
+                result.e[i] = b.x() + b.y() + b.z();
+            }
             break;
-        case D65:
+        case _D65:
             for (int i = 0; i < SAMPLE_NUM; ++i)
                 result.e[i] = d65_data[i];
             break;
     }
     return result;
 }
+
+static const spectrum RED = spectrum_type(_RED);
+static const spectrum GREEN = spectrum_type(_GREEN);
+static const spectrum BLUE = spectrum_type(_BLUE);
+static const spectrum D65 = spectrum_type(_D65);
 
 inline const float xyz_k(){
     return 21.371408462524414;

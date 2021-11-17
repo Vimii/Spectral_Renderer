@@ -2,5 +2,6 @@ cmake_minimum_required(VERSION 3.19)
 project(Spectral_RayTracing)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "-fopenmp") #OpenMP使うならオプションをset
 
-add_executable(Spectral_RayTracing src/main.cpp src/vec3.h src/color.h src/util.h src/spectrum.h src/d65.h)
+add_executable(Spectral_RayTracing src/main.cpp)

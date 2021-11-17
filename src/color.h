@@ -31,6 +31,15 @@ color srgb_to_xyz(const color &rgb){
     );
 }
 
+color xyz_to_rgb(const color &xyz) {
+    return color(
+            0.418466f * xyz.x() -0.158661f * xyz.x() - 0.082835f * xyz.x(),
+            -0.091169f * xyz.y() + 0.252431f * xyz.y() + 0.015707f * xyz.y(),
+            0.000921f * xyz.z() -0.002550f * xyz.z() + 0.178599f * xyz.z()
+    );
+}
+
+
 void write_color(struct RGBA &out , color pixel_color, int samples_per_pixel) {
     auto r = pixel_color.x();
     auto g = pixel_color.y();
