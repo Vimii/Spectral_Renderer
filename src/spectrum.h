@@ -20,6 +20,10 @@
 #include <algorithm>
 #include "d65.h"
 #include "color.h"
+#include <string>
+#include <map>
+#include <sstream>
+#include <vector>
 
 enum SPEC_TYPE{
     _EMPTY,
@@ -32,7 +36,11 @@ enum SPEC_TYPE{
 class spectrum{
 public:
     spectrum() : e{0}{}
-    spectrum(SPEC_TYPE) : e{/*初期化関数*/}{}
+    spectrum(const float spec[]){
+        for (int i = 0; i < SAMPLE_NUM; ++i) {
+            e[i] = spec[i];
+        }
+    }
 
     float operator[](int i) const { return e[i];}
     float& operator[](int i){ return e[i];}
@@ -244,6 +252,14 @@ static const spectrum GREEN = spectrum_type(_GREEN);
 static const spectrum BLUE = spectrum_type(_BLUE);
 static const spectrum D65 = spectrum_type(_D65);
 
+inline const int getWaveLength(int index){
+    return (int)(MTS_WAVELENGTH_MIN + 5 * index);
+}
+
+inline const int getIndex(int wavelength){
+    return (int)((wavelength - MTS_WAVELENGTH_MIN) / 5);
+}
+
 inline const float xyz_k(){
     return 21.371408462524414;
 }
@@ -264,6 +280,63 @@ inline color spectrum_to_xyz(spectrum sp){
                 );
 
     return xyz;
+}
+
+using namespace std;
+
+vector<string> split_naive(const string &s, char delim) {
+    vector<string> elems;
+    string item;
+    for (char ch: s) {
+        if (ch == delim) {
+            if (!item.empty())
+                elems.push_back(item);
+            item.clear();
+        }
+        else {
+            item += ch;
+        }
+    }
+    if (!item.empty())
+        elems.push_back(item);
+    return elems;
+}
+
+spectrum stospec(const string &s){
+    auto elems = split_naive(s,' ');
+    map<int, float> specpair;
+    float spec[SAMPLE_NUM];
+    int wl = MTS_WAVELENGTH_MIN;
+    for (int i = 0; i < SAMPLE_NUM; ++i) {
+        spec[i] = 0.0f;
+    }
+    for(auto uo : elems){
+        if(uo.back() == ',')
+            uo.erase(uo.length()-1);
+//        std::cout << uo << std::endl;
+        auto hoge = split_naive(uo,':');
+        int wavlen = stoi(hoge.front());
+        float ratio = stof(hoge.back());
+//        std::cout << wavlen << "@" << ratio << std::endl;
+        specpair.insert(make_pair(wavlen,ratio));
+    }
+    for (int i = 360; i < MTS_WAVELENGTH_MAX; i+=(MTS_WAVELENGTH_MAX-MTS_WAVELENGTH_MIN)/(SAMPLE_NUM-1)) {
+//        std::cout << i << "_[" << specpair.upper_bound(i)->first << "," << (specpair.lower_bound(i))->first << std::endl;
+        if(specpair.upper_bound(i)->first != specpair.lower_bound(i)->first){
+            if(specpair.upper_bound(i)->first < specpair.lower_bound(i)->first){break;}
+            spec[getIndex(i)] = specpair.lower_bound(i)->second;
+        }
+        else if(specpair.upper_bound(i)->first == specpair.upper_bound(0)->first)
+        { continue;}
+        else {
+            float r = (float)(i - (--specpair.upper_bound(i))->first)
+                      / ((float)(specpair.upper_bound(i)->first - (--specpair.upper_bound(i))->first));
+//            std::cout << r << std::endl;
+            spec[getIndex(i)] = (float)(specpair.upper_bound(i)->second) * r + (float)((--specpair.upper_bound(i))->second) * (1.0f - r);
+
+        }
+    }
+    return spectrum(spec);
 }
 
 #endif //SPECTRAL_RAYTRACING_SPECTRUM_H

@@ -1,9 +1,10 @@
 //
 // Created by Vimii on 2021/05/15.
 //
-
+#pragma once
 #ifndef RAY_H
 #define RAY_H
+
 
 #include "vec3.h"
 

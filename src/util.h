@@ -1,7 +1,7 @@
 //
 // Created by Vimii on 2021/11/01.
 //
-
+#pragma once
 #ifndef SPECTRAL_RAYTRACING_UTIL_H
 #define SPECTRAL_RAYTRACING_UTIL_H
 #include <cmath>
@@ -48,8 +48,8 @@ inline double clamp(double x, double min, double max) {
 }
 
 //共通ヘッダー
-#include "ray.h"
 #include "vec3.h"
+#include "ray.h"
 #include "color.h"
 
 #endif //SPECTRAL_RAYTRACING_UTIL_H

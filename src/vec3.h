@@ -1,6 +1,7 @@
 //
 // Created by Vimii on 2021/05/15.
 //
+#pragma once
 
 #ifndef VEC3_H
 #define VEC3_H

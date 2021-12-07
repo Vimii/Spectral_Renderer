@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fopenmp") #OpenMP使うならオプションをset
 
 add_executable(Spectral_RayTracing src/main.cpp)
+#add_executable(Spectral_RayTracing src/test.cpp)

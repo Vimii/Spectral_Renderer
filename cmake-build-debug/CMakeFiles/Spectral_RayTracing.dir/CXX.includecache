@@ -105,6 +105,14 @@ d65.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/d65.h
 color.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h
+string
+-
+map
+-
+sstream
+-
+vector
+-
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/sphere.h
 hittable.h
@@ -127,10 +135,10 @@ limits
 -
 memory
 -
-ray.h
-D:/UEC/UECRayTracing/Spectral_RayTracing/src/ray.h
 vec3.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/vec3.h
+ray.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/ray.h
 color.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h
 
