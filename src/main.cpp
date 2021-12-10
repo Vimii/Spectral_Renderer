@@ -28,7 +28,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
     auto red   = make_shared<lambertian>(make_shared<solid_color>(stospec(red_data)));
     auto white = make_shared<lambertian>(make_shared<solid_color>(stospec(white_data)));
     auto green = make_shared<lambertian>(make_shared<solid_color>(stospec(green_data)));
-    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65));
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(stospec(red_data)));
     shared_ptr<material> aluminum =
             make_shared<metal>(stospec(red_data), 0.0);
 
