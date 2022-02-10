@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include "d65.h"
+#include "spectrum_Data.h"
 #include "color.h"
 #include <string>
 #include <map>
@@ -27,15 +28,17 @@
 
 enum SPEC_TYPE{
     _EMPTY,
-    _RED,
-    _GREEN,
-    _BLUE,
     _D65
 };
 
 class spectrum{
 public:
     spectrum() : e{0}{}
+    spectrum(const float value){
+        for (int i = 0; i < SAMPLE_NUM; ++i) {
+            e[i] = value;
+        }
+    }
     spectrum(const float spec[]){
         for (int i = 0; i < SAMPLE_NUM; ++i) {
             e[i] = spec[i];
@@ -221,24 +224,6 @@ spectrum spectrum_type(SPEC_TYPE st){
     switch (st) {
         case _EMPTY:
             break;
-        case _RED:
-            for (int i = 0; i < SAMPLE_NUM; ++i){
-                color r = srgb_to_xyz(color(xyz_to_srgb(color(cie1931_x_data[i],cie1931_y_data[i],cie1931_z_data[i])).x(),0,0));
-                result.e[i] = r.x() + r.y() + r.z();
-            }
-            break;
-        case _GREEN:
-            for (int i = 0; i < SAMPLE_NUM; ++i) {
-                color g = srgb_to_xyz(color(0, xyz_to_srgb(color(cie1931_x_data[i], cie1931_y_data[i], cie1931_z_data[i])).y(),0));
-                result.e[i] = g.x() + g.y() + g.z();
-            }
-            break;
-        case _BLUE:
-            for (int i = 0; i < SAMPLE_NUM; ++i) {
-                color b = srgb_to_xyz(color(0, 0, xyz_to_srgb(color(cie1931_x_data[i], cie1931_y_data[i], cie1931_z_data[i])).z()));
-                result.e[i] = b.x() + b.y() + b.z();
-            }
-            break;
         case _D65:
             for (int i = 0; i < SAMPLE_NUM; ++i)
                 result.e[i] = d65_data[i];
@@ -247,9 +232,6 @@ spectrum spectrum_type(SPEC_TYPE st){
     return result;
 }
 
-static const spectrum RED = spectrum_type(_RED);
-static const spectrum GREEN = spectrum_type(_GREEN);
-static const spectrum BLUE = spectrum_type(_BLUE);
 static const spectrum D65 = spectrum_type(_D65);
 
 inline const int getWaveLength(int index){
@@ -261,7 +243,7 @@ inline const int getIndex(int wavelength){
 }
 
 inline const float xyz_k(){
-    return 21.371408462524414;
+    return 100.371408462524414;
 }
 
 inline color spectrum_to_xyz(spectrum sp){
@@ -279,7 +261,22 @@ inline color spectrum_to_xyz(spectrum sp){
                 xyz.z() / xyz_k()
                 );
 
+    //xyY表色系
+    xyz = color(xyz.x() / (xyz.x() + xyz.y() + xyz.z()),
+                xyz.y() / (xyz.x() + xyz.y() + xyz.z()),
+                xyz.z() / (xyz.x() + xyz.y() + xyz.z())
+                );
+
     return xyz;
+}
+
+inline double spectrum_to_Luminance(spectrum sp){
+    double Luminance = 0.0;
+
+    for(int i=0;i<SAMPLE_NUM;i++)
+        Luminance += sp.e[i] * cie1931_y_data[i];
+
+    return Luminance;
 }
 
 using namespace std;
@@ -308,7 +305,7 @@ spectrum stospec(const string &s){
     float spec[SAMPLE_NUM];
     int wl = MTS_WAVELENGTH_MIN;
     for (int i = 0; i < SAMPLE_NUM; ++i) {
-        spec[i] = 0.0f;
+        spec[i] = 1.0f;
     }
     for(auto uo : elems){
         if(uo.back() == ',')

@@ -18,8 +18,6 @@ public:
     solid_color() {}
     solid_color(spectrum c) : color_value(c) {}
 
-    solid_color(double red, double green, double blue)
-            : solid_color(red*RED + green*GREEN + blue*BLUE) {}
 
     virtual spectrum value(double u, double v, const vec3& p) const {
         return color_value;

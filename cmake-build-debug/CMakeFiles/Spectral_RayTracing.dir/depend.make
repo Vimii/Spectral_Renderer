@@ -16,6 +16,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/onb.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/pdf.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/ray.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/spectrum.h
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/spectrum_Data.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/sphere.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/texture.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/util.h

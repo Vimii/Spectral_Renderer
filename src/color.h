@@ -17,9 +17,9 @@ struct RGBA {
 
 color xyz_to_srgb(const color &xyz) {
     return color(
-            3.240479f * xyz.x() -1.537150f * xyz.x() - 0.498535f * xyz.x(),
-            -0.969256f * xyz.y() + 1.875991f * xyz.y() + 0.041556f * xyz.y(),
-            0.055648f * xyz.z() -0.204043f * xyz.z() + 1.057311f * xyz.z()
+            3.240479f * xyz.x() -1.537150f * xyz.y() - 0.498535f * xyz.z(),
+            -0.969256f * xyz.x() + 1.875991f * xyz.y() + 0.041556f * xyz.z(),
+            0.055648f * xyz.x() -0.204043f * xyz.y() + 1.057311f * xyz.z()
             );
 }
 
@@ -40,7 +40,7 @@ color xyz_to_rgb(const color &xyz) {
 }
 
 
-void write_color(struct RGBA &out , color pixel_color, int samples_per_pixel) {
+void write_color(struct RGBA &out , color pixel_color,double pixel_Luminance) {
     auto r = pixel_color.x();
     auto g = pixel_color.y();
     auto b = pixel_color.z();
@@ -50,11 +50,10 @@ void write_color(struct RGBA &out , color pixel_color, int samples_per_pixel) {
     if (g != g) g = 0.0;
     if (b != b) b = 0.0;
 
-    //色の和をサンプル数で割り、gamma = 2.0 のガンマ補正を行う。
-    auto scale = 1.0 / samples_per_pixel;
-    r = sqrt(scale * r);
-    g = sqrt(scale * g);
-    b = sqrt(scale * b);
+    //色に輝度をかけて、gamma = 2.0 のガンマ補正を行う。
+    r = sqrt(pixel_Luminance * r);
+    g = sqrt(pixel_Luminance * g);
+    b = sqrt(pixel_Luminance * b);
 
     out.r = static_cast<int>(256 * clamp(r, 0.0, 0.999));
     out.g = static_cast<int>(256 * clamp(g, 0.0, 0.999));

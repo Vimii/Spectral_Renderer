@@ -79,6 +79,8 @@ string.h
 -
 omp.h
 -
+iomanip
+-
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/material.h
 texture.h
@@ -103,6 +105,8 @@ algorithm
 -
 d65.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/d65.h
+spectrum_Data.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/spectrum_Data.h
 color.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/color.h
 string
@@ -113,6 +117,8 @@ sstream
 -
 vector
 -
+
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/spectrum_Data.h
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/sphere.h
 hittable.h
