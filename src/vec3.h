@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <iostream>
+#include "../Eigen/Dense"
 
 using std::sqrt;
 
@@ -15,14 +16,17 @@ class vec3 {
 public:
     vec3() : e{0,0,0} {}
     vec3(double e0, double e1, double e2) : e{e0, e1, e2} {}
+    vec3(Eigen::Vector3f vec3f) : e{vec3f.x(),vec3f.y(),vec3f.z()} {}
 
     double x() const { return e[0]; }
     double y() const { return e[1]; }
     double z() const { return e[2]; }
+    Eigen::Vector3f V3f() const { return Eigen::Vector3f(e[0],e[1],e[2]);}
 
     vec3 operator-() const { return vec3(-e[0], -e[1], -e[2]); }
     double operator[](int i) const { return e[i]; }
     double& operator[](int i) { return e[i]; }
+
 
     vec3& operator+=(const vec3 &v) {
         e[0] += v.e[0];

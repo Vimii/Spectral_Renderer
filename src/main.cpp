@@ -15,6 +15,7 @@
 #include "aarect.h"
 #include "sphere.h"
 #include "box.h"
+#include "triangle.h"
 #include <string.h>
 #include <omp.h>
 #include <iomanip>
@@ -81,7 +82,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
     auto red   = make_shared<lambertian>(make_shared<solid_color>(stospec(red_data)));
     auto white = make_shared<lambertian>(make_shared<solid_color>(stospec(white_data)));
     auto green = make_shared<lambertian>(make_shared<solid_color>(stospec(green_data)));
-    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*100));
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*0.1));
     shared_ptr<material> aluminum =
             make_shared<metal>(stospec(red_data), 0.0);
 
@@ -92,22 +93,41 @@ hittable_list cornell_box(camera& cam, double aspect) {
     world.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
     world.add(make_shared<xy_rect>(0, 555, 0, 555, 555, white));
 
-    world.add(make_shared<box>(point3(0,450,0), point3(260,550,555), white));
-    world.add(make_shared<box>(point3(270,450,0), point3(555,550,555), white));
+//    world.add(make_shared<box>(point3(0,450,0), point3(260,550,555), white));
+//    world.add(make_shared<box>(point3(270,450,0), point3(555,550,555), white));
+//
+//    auto glass = make_shared<dielectric>(1.5);
+//    shared_ptr<hittable> box1 = make_shared<box>(point3(0,0,0), point3(200,100,100), glass);
+//    box1 = make_shared<rotate_x>(box1, 40);
+//    box1 = make_shared<rotate_y>(box1, 90);
+//    box1 = make_shared<translate>(box1, vec3(200,170,395));
+//    world.add(box1);
+//
 
-    auto glass = make_shared<dielectric>(1.5);
-    shared_ptr<hittable> box1 = make_shared<box>(point3(0,0,0), point3(200,100,100), glass);
-    box1 = make_shared<rotate_x>(box1, 40);
-    box1 = make_shared<rotate_y>(box1, 90);
-    box1 = make_shared<translate>(box1, vec3(200,370,395));
-    world.add(box1);
+    std::vector<Vector3f> verticies;
+    verticies.push_back(Vector3f(200,0,200));
+    verticies.push_back(Vector3f(0,-100,400));
+    verticies.push_back(Vector3f(100,0,300));
 
+    world.add(make_shared<translate>(make_shared<triangle>(verticies, red), vec3(200,170,0)));
+
+
+//    point3 lookfrom(278, 278, -800);
+//    point3 lookat(278, 178, 0);
+//    vec3 vup(0, 1, 0);
+//    auto dist_to_focus = 10.0;
+//    auto aperture = 0.0;
+//    auto vfov = 20.0;
+//    auto t0 = 0.0;
+//    auto t1 = 1.0;
+
+    //全体
     point3 lookfrom(278, 278, -800);
-    point3 lookat(138, 378, 0);
+    point3 lookat(278, 278, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 10.0;
     auto aperture = 0.0;
-    auto vfov = 20.0;
+    auto vfov = 40.0;
     auto t0 = 0.0;
     auto t1 = 1.0;
 
@@ -166,9 +186,9 @@ float ray_spectrum(const ray& r, const spectrum& background, const hittable& wor
 int main() {
 
     const auto aspect_ratio = 1.0;
-    const int image_width = 1000;
+    const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int sample_per_pixel = 100;
+    const int sample_per_pixel = 10;
     const int max_depth = 5;
     const spectrum background = const_spectrum(0);
 

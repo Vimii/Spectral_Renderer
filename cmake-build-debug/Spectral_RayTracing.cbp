@@ -86,6 +86,9 @@
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/spectrum_Data.h">
 			<Option target="Spectral_RayTracing"/>
 		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/triangle.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -136,10 +136,10 @@ public:
         srec.pdf_ptr = nullptr;
         srec.attenuation = const_spectrum(1.0f);
 
-//        double ref = ref_idx + (double)(r_in.wavelength() - MTS_WAVELENGTH_MIN)
-//                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * 0.1;
+        double ref = ref_idx + (double)(r_in.wavelength() - MTS_WAVELENGTH_MIN)
+                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * (-1);
 
-        double ref = J_SFH1_tbl[getIndex(r_in.wavelength())];
+//        double ref = J_SFH1_tbl[getIndex(r_in.wavelength())];
 
         double etai_over_etat = (rec.front_face) ? (1.0 / ref) : (ref);
 
