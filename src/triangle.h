@@ -15,22 +15,29 @@ struct Face{
     Vector3i texcoord_id;
 };
 
+struct MeshData{
+    Vector3f* vertices;
+    Face* faces;
+    Vector3f* normals;
+    Vector2f* texcoords;
+};
+
 class triangle: public hittable{
 public:
     triangle(){};
 
-    triangle(const std::vector<Vector3f>& verticies,
+    triangle(const std::vector<Vector3f>& vertices,
              shared_ptr<material> mat
-    ): m_verticies(verticies) ,
+    ): m_vertices(vertices) ,
        m_mp(mat){};
 
-    triangle(const std::vector<Vector3f>& verticies,
-             const std::vector<Face>& faces,
+    triangle(const std::vector<Vector3f>& vertices,
+             const Face& face,
              const std::vector<Vector3f>& normals,
              const std::vector<Vector2f>& texcoords,
              shared_ptr<material> mat
-            ): m_verticies(verticies) ,
-               m_faces(faces),
+            ): m_vertices(vertices) ,
+               m_face(face),
                m_normals(normals),
                m_texcoords(texcoords),
                m_mp(mat){};
@@ -40,29 +47,29 @@ public:
     virtual bool bounding_box(double t0, double t1, aabb& output_box) const {
         // AABB の辺の長さはゼロであってはならないので、
         // y 方向に少しだけ厚みを持たせる
-        output_box = aabb(point3(minVertex(m_verticies)), point3(maxVertex(m_verticies)));
+        output_box = aabb(point3(minVertex(m_vertices)), point3(maxVertex(m_vertices)));
         return true;
     }
 
-    virtual Vector3f maxVertex(const std::vector<Vector3f>& verticies) const {
+    virtual Vector3f maxVertex(const std::vector<Vector3f>& vertices) const {
         return Vector3f(
-                max(verticies[0].x(),max(verticies[1].x(),verticies[2].x())),
-                max(verticies[0].y(),max(verticies[1].y(),verticies[2].y())),
-                max(verticies[0].z(),max(verticies[1].z(),verticies[2].z()))
+                max(vertices[0].x(), max(vertices[1].x(), vertices[2].x())),
+                max(vertices[0].y(), max(vertices[1].y(), vertices[2].y())),
+                max(vertices[0].z(), max(vertices[1].z(), vertices[2].z()))
                 );
     }
 
-    virtual Vector3f minVertex(const std::vector<Vector3f>& verticies) const {
+    virtual Vector3f minVertex(const std::vector<Vector3f>& vertices) const {
         return Vector3f(
-                min(verticies[0].x(),min(verticies[1].x(),verticies[2].x())),
-                min(verticies[0].y(),min(verticies[1].y(),verticies[2].y())),
-                min(verticies[0].z(),min(verticies[1].z(),verticies[2].z()))
+                min(vertices[0].x(), min(vertices[1].x(), vertices[2].x())),
+                min(vertices[0].y(), min(vertices[1].y(), vertices[2].y())),
+                min(vertices[0].z(), min(vertices[1].z(), vertices[2].z()))
         );
     }
 
 protected:
-    std::vector<Vector3f> m_verticies;
-    std::vector<Face> m_faces;
+    std::vector<Vector3f> m_vertices;
+    Face m_face;
     std::vector<Vector3f> m_normals;
     std::vector<Vector2f> m_texcoords;
 
@@ -72,7 +79,7 @@ protected:
 bool triangle::hit(const ray &r, double t0, double t1, hit_record &rec) const {
     /*参考:https://github.com/mitsuba-renderer/mitsuba/blob/450a2b8a258f09ec7e0824861e2306340ccbb3f4/include/mitsuba/core/triangle.h#L109*/
     /*2辺を設定*/
-    Vector3f edge1 = m_verticies[1] - m_verticies[0], edge2 = m_verticies[2] - m_verticies[0];
+    Vector3f edge1 = m_vertices[1] - m_vertices[0], edge2 = m_vertices[2] - m_vertices[0];
 
     /*行列式を計算*/
     Vector3f pvec = r.dir.V3f().cross(edge2);
@@ -83,7 +90,7 @@ bool triangle::hit(const ray &r, double t0, double t1, hit_record &rec) const {
     Float inv_det = 1.0f / det;
 
     /*頂点[0]からr.originまでの距離*/
-    Vector3f tvec = r.origin().V3f() - m_verticies[0];
+    Vector3f tvec = r.origin().V3f() - m_vertices[0];
 
     /*Uパラメータを計算しバウンドテスト*/
     float u = tvec.dot(pvec) * inv_det;

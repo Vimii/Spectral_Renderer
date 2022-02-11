@@ -241,6 +241,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../Eigen/src/plugins/Indexe
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../Eigen/src/plugins/ReshapedMethods.h
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/ObjModel.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/aabb.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/aarect.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/box.h
@@ -250,6 +251,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/d65.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/filename.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/hittable.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/hittable_list.h
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/loadObj.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/main.cpp
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/material.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/onb.h
@@ -264,4 +266,5 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/util.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/vec3.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../stb-master/stb_image.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../stb-master/stb_image_write.h
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../tinyobjloader-master/tiny_obj_loader.h
 

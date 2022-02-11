@@ -1258,6 +1258,10 @@ D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/src/plugins/ReshapedMethods.h
 ReshapedMethods.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/src/plugins/ReshapedMethods.h
 
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/ObjModel.h
+loadObj.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/loadObj.h
+
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/aabb.h
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/aarect.h
@@ -1294,6 +1298,14 @@ memory
 vector
 -
 
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/loadObj.h
+../tinyobjloader-master/tiny_obj_loader.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/tinyobjloader-master/tiny_obj_loader.h
+triangle.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/triangle.h
+algorithm
+-
+
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp
 iostream
 -
@@ -1327,8 +1339,10 @@ sphere.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/sphere.h
 box.h
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/box.h
-triangle.h
-D:/UEC/UECRayTracing/Spectral_RayTracing/src/triangle.h
+loadObj.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/loadObj.h
+ObjModel.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/ObjModel.h
 string.h
 -
 omp.h
@@ -1461,4 +1475,36 @@ math.h
 -
 assert.h
 -
+
+D:/UEC/UECRayTracing/Spectral_RayTracing/tinyobjloader-master/tiny_obj_loader.h
+map
+-
+string
+-
+vector
+-
+cassert
+-
+cctype
+-
+cmath
+-
+cstddef
+-
+cstdlib
+-
+cstring
+-
+fstream
+-
+limits
+-
+sstream
+-
+utility
+-
+array
+-
+mapbox/earcut.hpp
+D:/UEC/UECRayTracing/Spectral_RayTracing/tinyobjloader-master/mapbox/earcut.hpp
 

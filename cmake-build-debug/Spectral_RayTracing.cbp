@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/ObjModel.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
+		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/loadObj.h">
+			<Option target="Spectral_RayTracing"/>
+		</Unit>
 		<Unit filename="D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp">
 			<Option target="Spectral_RayTracing"/>
 		</Unit>

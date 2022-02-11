@@ -242,6 +242,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj
  D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/src/plugins/MatrixCwiseBinaryOps.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/src/plugins/MatrixCwiseUnaryOps.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/src/plugins/ReshapedMethods.h
+ D:/UEC/UECRayTracing/Spectral_RayTracing/src/ObjModel.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/aabb.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/aarect.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/box.h
@@ -251,6 +252,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/filename.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/hittable.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/hittable_list.h
+ D:/UEC/UECRayTracing/Spectral_RayTracing/src/loadObj.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/main.cpp
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/material.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/onb.h
@@ -265,3 +267,4 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj
  D:/UEC/UECRayTracing/Spectral_RayTracing/src/vec3.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/stb-master/stb_image.h
  D:/UEC/UECRayTracing/Spectral_RayTracing/stb-master/stb_image_write.h
+ D:/UEC/UECRayTracing/Spectral_RayTracing/tinyobjloader-master/tiny_obj_loader.h
