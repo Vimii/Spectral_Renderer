@@ -7,7 +7,7 @@
 
 #include "loadObj.h"
 
-class ObjModel: public hittable {
+class ObjModel final : public hittable {
 public:
     ObjModel(){}
     ObjModel(
@@ -15,15 +15,15 @@ public:
             shared_ptr<material> mp
             );
 
-    virtual bool hit(const ray& r, double t0, double t1, hit_record& rec) const;
+    bool hit(const ray& r, double t0, double t1, hit_record& rec) const;
 
-    virtual bool bounding_box(double t0, double t1, aabb& output_box) const {
+    bool bounding_box(double t0, double t1, aabb& output_box) const {
         output_box = aabb(box_min, box_max);
         return true;
     }
 
 
-protected:
+private:
     std::string m_filepath;
     std::vector<Vector3f> m_vertices;
     std::vector<Face> m_faces;

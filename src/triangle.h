@@ -15,7 +15,7 @@ struct Face{
     Vector3i texcoord_id;
 };
 
-class triangle: public hittable{
+class triangle final : public hittable{
 public:
     triangle(){};
 
@@ -39,16 +39,16 @@ public:
         m_box_max = maxVertex(m_vertices);
     };
 
-    virtual bool hit(const ray& r, double t0, double t1, hit_record& rec) const;
+    bool hit(const ray& r, double t0, double t1, hit_record& rec) const;
 
-    virtual bool bounding_box(double t0, double t1, aabb& output_box) const {
+    bool bounding_box(double t0, double t1, aabb& output_box) const {
         // AABB の辺の長さはゼロであってはならないので、
         // y 方向に少しだけ厚みを持たせる
         output_box = aabb(point3(m_box_min), point3(m_box_max));
         return true;
     }
 
-    virtual Vector3f maxVertex(const std::vector<Vector3f>& vertices) const {
+    Vector3f maxVertex(const std::vector<Vector3f>& vertices) const {
         return Vector3f(
                 max(vertices[0].x(), max(vertices[1].x(), vertices[2].x())),
                 max(vertices[0].y(), max(vertices[1].y(), vertices[2].y())),
@@ -56,7 +56,7 @@ public:
                 );
     }
 
-    virtual Vector3f minVertex(const std::vector<Vector3f>& vertices) const {
+    Vector3f minVertex(const std::vector<Vector3f>& vertices) const {
         return Vector3f(
                 min(vertices[0].x(), min(vertices[1].x(), vertices[2].x())),
                 min(vertices[0].y(), min(vertices[1].y(), vertices[2].y())),
@@ -64,7 +64,7 @@ public:
         );
     }
 
-protected:
+private:
     std::vector<Vector3f> m_vertices;
     Face m_face;
     std::vector<Vector3f> m_normals;

@@ -98,36 +98,18 @@ hittable_list cornell_box(camera& cam, double aspect) {
 //    world.add(make_shared<box>(point3(0,450,0), point3(260,550,555), white));
 //    world.add(make_shared<box>(point3(270,450,0), point3(555,550,555), white));
 //
-    auto glass = make_shared<dielectric>(1.5);
+//    auto glass = make_shared<dielectric>(1.5);
 //    shared_ptr<hittable> box1 = make_shared<box>(point3(0,0,0), point3(200,100,100), glass);
 //    box1 = make_shared<rotate_x>(box1, 40);
 //    box1 = make_shared<rotate_y>(box1, 90);
 //    box1 = make_shared<translate>(box1, vec3(200,170,395));
 //    world.add(box1);
-
-    shared_ptr<hittable> diamond = make_shared<ObjModel>("../resource/obj/diamond.obj", glass);
-    diamond =  make_shared<translate>(diamond, vec3(300,170,200));
+    auto dia = make_shared<dielectric>(2.416);
+    shared_ptr<hittable> diamond = make_shared<ObjModel>("../resource/obj/diamond.obj", dia);
+    diamond =  make_shared<translate>(diamond, vec3(278,130,200));
     world.add(diamond);
 
-//    std::vector<Vector3f> vertices;
-//    std::vector<Face> faces;
-//    std::vector<Vector3f> normals;
-//    std::vector<Vector2f> texcoords;
-//
-//    loadObj( "../resource/obj/diamond.obj", vertices, faces, normals, texcoords);
-//
-//    for (auto f: faces) {
-//        std::vector<Vector3f> v;
-////        std::cout << f.vertex_id[0] << ", " << f.vertex_id[1] << ", " << f.vertex_id[2] << std::endl;
-//
-//        v.push_back(vertices[f.vertex_id[0]]);
-//        v.push_back(vertices[f.vertex_id[1]]);
-//        v.push_back(vertices[f.vertex_id[2]]);
-//
-//        world.add(make_shared<translate>(make_shared<triangle>(v, red), vec3(200,170,0)));
-//    }
-//    world.add(make_shared<translate>(make_shared<triangle>(vertices, red), vec3(200,170,0)));
-
+    //三角形
 //    std::vector<Vector3f> verticies;
 //    verticies.push_back(Vector3f(200,0,200));
 //    verticies.push_back(Vector3f(0,-100,400));
@@ -136,24 +118,24 @@ hittable_list cornell_box(camera& cam, double aspect) {
 //    world.add(make_shared<translate>(make_shared<triangle>(verticies, red), vec3(200,170,0)));
 
 
-//    point3 lookfrom(278, 278, -800);
-//    point3 lookat(278, 178, 0);
-//    vec3 vup(0, 1, 0);
-//    auto dist_to_focus = 10.0;
-//    auto aperture = 0.0;
-//    auto vfov = 20.0;
-//    auto t0 = 0.0;
-//    auto t1 = 1.0;
-
-    //全体
-    point3 lookfrom(278, 278, -800);
-    point3 lookat(278, 278, 0);
+    point3 lookfrom(10, 400, 0);
+    point3 lookat(278, 30, 200);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 10.0;
     auto aperture = 0.0;
     auto vfov = 40.0;
     auto t0 = 0.0;
     auto t1 = 1.0;
+
+//    //全体
+//    point3 lookfrom(278, 278, -800);
+//    point3 lookat(278, 278, 0);
+//    vec3 vup(0, 1, 0);
+//    auto dist_to_focus = 10.0;
+//    auto aperture = 0.0;
+//    auto vfov = 40.0;
+//    auto t0 = 0.0;
+//    auto t1 = 1.0;
 
     cam = camera(lookfrom, lookat, vup, vfov, aspect, aperture, dist_to_focus, t0, t1);
 
@@ -212,12 +194,19 @@ int main() {
     const auto aspect_ratio = 1.0;
     const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int sample_per_pixel = 10;
+    const int sample_per_pixel = 3;
     const int max_depth = 5;
     const spectrum background = const_spectrum(0);
 
+    //render_target
     std::unique_ptr<RGBA[][image_width]> rgba(new(std::nothrow) RGBA[image_height][image_width]);
     if (!rgba) return -1;
+    //normal_buffer
+    std::unique_ptr<RGBA[][image_width]> normals(new(std::nothrow) RGBA[image_height][image_width]);
+    if (!normals) return -1;
+    //objectId_buffer
+    std::unique_ptr<RGBA[][image_width]> objectId(new(std::nothrow) RGBA[image_height][image_width]);
+    if (!objectId) return -1;
 
     camera cam;
     hittable_list world = cornell_box(cam,aspect_ratio);
@@ -240,7 +229,7 @@ int main() {
                 auto u = (i + random_double())/(image_width-1);
                 auto v = (j + random_double())/(image_height-1);
             #pragma omp parallel for
-                for (int k = 0; k < SAMPLE_NUM; ++k) {
+                for (int k = getIndex(400); k <= getIndex(700); ++k) {
                     ray r = cam.get_ray(u,v, getWaveLength(k));
                     pixel_spectrum[k] += ray_spectrum(r,background, world, lights, max_depth);
                 }
