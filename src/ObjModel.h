@@ -61,12 +61,16 @@ ObjModel::ObjModel(std::string filepath,
         n.push_back(m_normals[f.normal_id[2]]);
 
         std::vector<Vector2f> t;
-//        t.push_back(m_texcoords[f.texcoord_id[0]]);
-//        t.push_back(m_texcoords[f.texcoord_id[1]]);
-
-        t.push_back(Vector2f(0.f,0.f));
-        t.push_back(Vector2f(1.f,1.f));
-
+        if(m_texcoords.size() > 0) {
+            t.push_back(m_texcoords[f.texcoord_id[0]]);
+            t.push_back(m_texcoords[f.texcoord_id[1]]);
+            t.push_back(m_texcoords[f.texcoord_id[2]]);
+        }else {
+            //適当です。
+            t.push_back(Vector2f(0.f, 0.f));
+            t.push_back(Vector2f(1.f, 0.f));
+            t.push_back(Vector2f(0.f, 1.f));
+        }
         sides.add(make_shared<triangle>(v,f,n,t,mp));
     }
 

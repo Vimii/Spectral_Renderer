@@ -98,15 +98,15 @@ hittable_list cornell_box(camera& cam, double aspect) {
 //    world.add(make_shared<box>(point3(0,450,0), point3(260,550,555), white));
 //    world.add(make_shared<box>(point3(270,450,0), point3(555,550,555), white));
 //
-//    auto glass = make_shared<dielectric>(1.5);
+    auto glass = make_shared<dielectric>(1.5);
 //    shared_ptr<hittable> box1 = make_shared<box>(point3(0,0,0), point3(200,100,100), glass);
 //    box1 = make_shared<rotate_x>(box1, 40);
 //    box1 = make_shared<rotate_y>(box1, 90);
 //    box1 = make_shared<translate>(box1, vec3(200,170,395));
 //    world.add(box1);
 
-    shared_ptr<hittable> diamond = make_shared<ObjModel>("../resource/obj/diamond.obj", red);
-    diamond =  make_shared<translate>(diamond, vec3(200,170,0));
+    shared_ptr<hittable> diamond = make_shared<ObjModel>("../resource/obj/diamond.obj", glass);
+    diamond =  make_shared<translate>(diamond, vec3(300,170,200));
     world.add(diamond);
 
 //    std::vector<Vector3f> vertices;
@@ -210,9 +210,9 @@ float ray_spectrum(const ray& r, const spectrum& background, const hittable& wor
 int main() {
 
     const auto aspect_ratio = 1.0;
-    const int image_width = 100;
+    const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int sample_per_pixel = 3;
+    const int sample_per_pixel = 10;
     const int max_depth = 5;
     const spectrum background = const_spectrum(0);
 

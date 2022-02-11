@@ -15,13 +15,6 @@ struct Face{
     Vector3i texcoord_id;
 };
 
-struct MeshData{
-    Vector3f* vertices;
-    Face* faces;
-    Vector3f* normals;
-    Vector2f* texcoords;
-};
-
 class triangle: public hittable{
 public:
     triangle(){};
@@ -40,14 +33,18 @@ public:
                m_face(face),
                m_normals(normals),
                m_texcoords(texcoords),
-               m_mp(mat){};
+               m_mp(mat){
+
+        m_box_min = minVertex(m_vertices);
+        m_box_max = maxVertex(m_vertices);
+    };
 
     virtual bool hit(const ray& r, double t0, double t1, hit_record& rec) const;
 
     virtual bool bounding_box(double t0, double t1, aabb& output_box) const {
         // AABB の辺の長さはゼロであってはならないので、
         // y 方向に少しだけ厚みを持たせる
-        output_box = aabb(point3(minVertex(m_vertices)), point3(maxVertex(m_vertices)));
+        output_box = aabb(point3(m_box_min), point3(m_box_max));
         return true;
     }
 
@@ -72,6 +69,8 @@ protected:
     Face m_face;
     std::vector<Vector3f> m_normals;
     std::vector<Vector2f> m_texcoords;
+    Vector3f m_box_min;
+    Vector3f m_box_max;
 
     shared_ptr<material> m_mp;
 };
