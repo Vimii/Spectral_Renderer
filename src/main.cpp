@@ -74,7 +74,7 @@
 //    return world;
 //}
 
-hittable_list cornell_box(camera& cam, double aspect) {
+hittable_list cornell_box(camera& cam, double aspect, double t_ratio) {
     hittable_list world;
 
     auto red_data = "400:0.04, 404:0.046, 408:0.048, 412:0.053, 416:0.049, 420:0.05, 424:0.053, 428:0.055, 432:0.057, 436:0.056, 440:0.059, 444:0.057, 448:0.061, 452:0.061, 456:0.06, 460:0.062, 464:0.062, 468:0.062, 472:0.061, 476:0.062, 480:0.06, 484:0.059, 488:0.057, 492:0.058, 496:0.058, 500:0.058, 504:0.056, 508:0.055, 512:0.056, 516:0.059, 520:0.057, 524:0.055, 528:0.059, 532:0.059, 536:0.058, 540:0.059, 544:0.061, 548:0.061, 552:0.063, 556:0.063, 560:0.067, 564:0.068, 568:0.072, 572:0.08, 576:0.09, 580:0.099, 584:0.124, 588:0.154, 592:0.192, 596:0.255, 600:0.287, 604:0.349, 608:0.402, 612:0.443, 616:0.487, 620:0.513, 624:0.558, 628:0.584, 632:0.62, 636:0.606, 640:0.609, 644:0.651, 648:0.612, 652:0.61, 656:0.65, 660:0.638, 664:0.627, 668:0.62, 672:0.63, 676:0.628, 680:0.642, 684:0.639, 688:0.657, 692:0.639, 696:0.635, 700:0.642";
@@ -84,7 +84,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
     auto white = make_shared<lambertian>(make_shared<solid_color>(stospec(white_data)));
     auto green = make_shared<lambertian>(make_shared<solid_color>(stospec(green_data)));
     auto black = make_shared<lambertian>(make_shared<solid_color>(spectrum(0.f)));
-    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*0.1));
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*0.04));
     shared_ptr<material> aluminum =
             make_shared<metal>(stospec(red_data), 0.0);
 
@@ -106,6 +106,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
 //    world.add(box1);
     auto dia = make_shared<dielectric>(2.416);
     shared_ptr<hittable> diamond = make_shared<ObjModel>("../resource/obj/diamond.obj", dia);
+    diamond = make_shared<rotate_y>(diamond, 40 * t_ratio);
     diamond =  make_shared<translate>(diamond, vec3(278,130,200));
     world.add(diamond);
 
@@ -119,7 +120,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
 
 
     point3 lookfrom(10, 400, 0);
-    point3 lookat(278, 30, 200);
+    point3 lookat(278, 200 * t_ratio + 30 * (1.0-t_ratio), 150 * t_ratio + 220 * (1.0-t_ratio));
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 10.0;
     auto aperture = 0.0;
@@ -195,54 +196,61 @@ int main() {
     const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int sample_per_pixel = 3;
-    const int max_depth = 5;
+    const int max_depth = 15;
     const spectrum background = const_spectrum(0);
 
-    //render_target
-    std::unique_ptr<RGBA[][image_width]> rgba(new(std::nothrow) RGBA[image_height][image_width]);
-    if (!rgba) return -1;
-    //normal_buffer
-    std::unique_ptr<RGBA[][image_width]> normals(new(std::nothrow) RGBA[image_height][image_width]);
-    if (!normals) return -1;
-    //objectId_buffer
-    std::unique_ptr<RGBA[][image_width]> objectId(new(std::nothrow) RGBA[image_height][image_width]);
-    if (!objectId) return -1;
+    const int frameNum = 5;
 
-    camera cam;
-    hittable_list world = cornell_box(cam,aspect_ratio);
-    auto lights = make_shared<hittable_list>();
-    lights->add(make_shared<xz_rect>(213, 343, 227, 332, 554, nullptr));
-    lights->add(make_shared<sphere>(point3(190, 90, 190), 90, nullptr));
+    for (int frame = 0; frame < frameNum; ++frame) {
+        double t_ratio = (double) frame / (double) frameNum;
+        //render_target
+        std::unique_ptr<RGBA[][image_width]> rgba(new(std::nothrow) RGBA[image_height][image_width]);
+        if (!rgba) return -1;
 
-    clock_t start, stop;
-    start = clock();
+//        //normal_buffer
+//        std::unique_ptr<RGBA[][image_width]> normals(new(std::nothrow) RGBA[image_height][image_width]);
+//        if (!normals) return -1;
+//        //objectId_buffer
+//        std::unique_ptr<RGBA[][image_width]> objectId(new(std::nothrow) RGBA[image_height][image_width]);
+//        if (!objectId) return -1;
 
-    for(int j = image_height -1 ; j >= 0; --j){
-        std::cerr << "\rScanlines remaining: "  << j << ' ' << std::flush;
-#pragma omp parallel for
-        for(int i = 0; i < image_width; ++i){
-            color pixel_color(0,0,0);
-            double pixel_Luminance;
-            spectrum pixel_spectrum;
-        #pragma omp parallel for
-            for(int s = 0; s < sample_per_pixel; ++s){
-                auto u = (i + random_double())/(image_width-1);
-                auto v = (j + random_double())/(image_height-1);
+        camera cam;
+        hittable_list world = cornell_box(cam, aspect_ratio,t_ratio);
+        auto lights = make_shared<hittable_list>();
+        lights->add(make_shared<xz_rect>(213, 343, 227, 332, 554, nullptr));
+        lights->add(make_shared<sphere>(point3(190, 90, 190), 90, nullptr));
+
+        clock_t start, stop;
+        start = clock();
+
+        for (int j = image_height - 1; j >= 0; --j) {
+            std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
             #pragma omp parallel for
-                for (int k = getIndex(400); k <= getIndex(700); ++k) {
-                    ray r = cam.get_ray(u,v, getWaveLength(k));
-                    pixel_spectrum[k] += ray_spectrum(r,background, world, lights, max_depth);
+            for (int i = 0; i < image_width; ++i) {
+                color pixel_color(0, 0, 0);
+                double pixel_Luminance;
+                spectrum pixel_spectrum;
+                #pragma omp parallel for
+                for (int s = 0; s < sample_per_pixel; ++s) {
+                    auto u = (i + random_double()) / (image_width - 1);
+                    auto v = (j + random_double()) / (image_height - 1);
+                    #pragma omp parallel for
+                    for (int k = getIndex(400); k <= getIndex(700); ++k) {
+                        ray r = cam.get_ray(u, v, getWaveLength(k));
+                        pixel_spectrum[k] += ray_spectrum(r, background, world, lights, max_depth);
+                    }
                 }
+                spectrum pixel_spectrum2 = pixel_spectrum / sample_per_pixel;
+                pixel_color = xyz_to_srgb(spectrum_to_xyz(pixel_spectrum2));
+                pixel_Luminance = spectrum_to_Luminance(pixel_spectrum2);
+                write_color(rgba[image_height - 1 - j][i], pixel_color, pixel_Luminance);
             }
-            spectrum pixel_spectrum2 = pixel_spectrum/sample_per_pixel;
-            pixel_color = xyz_to_srgb(spectrum_to_xyz(pixel_spectrum2));
-            pixel_Luminance = spectrum_to_Luminance(pixel_spectrum2);
-            write_color(rgba[image_height-1-j][i], pixel_color, pixel_Luminance);
         }
+        stop = clock();
+        double timer_seconds = ((double) (stop - start)) / CLOCKS_PER_SEC;
+        std::cerr << "\nDone.\n";
+        std::cerr << "took " << timer_seconds << " seconds.\n";
+        stbi_write_png(dayName(frame).c_str(), static_cast<int>(image_width), static_cast<int>(image_height),
+                       static_cast<int>(sizeof(RGBA)), rgba.get(), 0);
     }
-    stop = clock();
-    double timer_seconds = ((double)(stop - start)) / CLOCKS_PER_SEC;
-    std::cerr << "\nDone.\n";
-    std::cerr << "took " << timer_seconds << " seconds.\n";
-    stbi_write_png(dayName().c_str(), static_cast<int>(image_width), static_cast<int>(image_height), static_cast<int>(sizeof(RGBA)), rgba.get(), 0);
 }

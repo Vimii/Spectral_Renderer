@@ -137,7 +137,7 @@ public:
         srec.attenuation = const_spectrum(1.0f);
 
         double ref = ref_idx + (double)(r_in.wavelength() - MTS_WAVELENGTH_MIN)
-                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * (-0.3);
+                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * (-0.7);
 
 //        double ref = J_SFH1_tbl[getIndex(r_in.wavelength())];
 
