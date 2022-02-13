@@ -21,15 +21,13 @@
 #include <string.h>
 #include <omp.h>
 #include "../Eigen/Dense"
+#include <typeinfo.h>
 
 using Eigen::MatrixXd;
 
 int main(){
-    MatrixXd m(2,2);
-    m(0,0) = 3;
-    m(1,0) = 2.5;
-    m(0,1) = -1;
-    m(1,1) = m(1,0) + m(0,1);
-    std::cout << m << std::endl;
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*100));
+    auto glass = make_shared<dielectric>(1.5, 1);
+    if(typeid(light) == typeid(glass)) std::cout << "uouo" << std::endl;
     return 0;
 }

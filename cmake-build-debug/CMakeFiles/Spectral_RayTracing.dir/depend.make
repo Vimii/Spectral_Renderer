@@ -264,6 +264,7 @@ CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/texture.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/triangle.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/util.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/vec3.h
+CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../src/world.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../stb-master/stb_image.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../stb-master/stb_image_write.h
 CMakeFiles/Spectral_RayTracing.dir/src/main.cpp.obj: ../tinyobjloader-master/tiny_obj_loader.h

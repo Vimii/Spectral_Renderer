@@ -11,8 +11,8 @@
 class ray {
 public:
     ray() {}
-    ray(const point3& origin, const vec3& direction, double time = 0.0, const double wavelength = 500.0)
-            : orig(origin), dir(direction), tm(time), wl(wavelength)
+    ray(const point3& origin, const vec3& direction, double time = 0.0, const double wavelength = 500.0,bool sep = false)
+            : orig(origin), dir(direction), tm(time), wl(wavelength),separated(sep)
     {}
 
     point3 origin() const  { return orig; }
@@ -29,6 +29,7 @@ public:
     vec3 dir;
     double tm;
     double wl;
+    bool separated;
 };
 
 #endif //RAY_H

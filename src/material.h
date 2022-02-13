@@ -10,12 +10,23 @@
 #include "pdf.h"
 #include "spectrum.h"
 
+enum material_type{
+    diffuse_l,
+    lamb,
+    mtl,
+    diel,
+    isot
+};
+
 struct scatter_record{
     ray specular_ray;
     bool is_specular;
     spectrum attenuation;
     shared_ptr<pdf> pdf_ptr;
+    material_type mat_type;
 };
+
+
 
 class material {
 public:
@@ -86,6 +97,7 @@ public:
         srec.is_specular = false;
         srec.attenuation = albedo->value(rec.u,rec.v,rec.p);
         srec.pdf_ptr = make_shared<cosine_pdf>(rec.normal);
+        srec.mat_type = lamb;
         return true;
     }
 
@@ -111,6 +123,7 @@ public:
         srec.attenuation = albedo;
         srec.is_specular = true;
         srec.pdf_ptr = 0;
+        srec.mat_type = mtl;
         return true;
     }
 
@@ -127,7 +140,7 @@ double schlick(double cosine, double ref_idx) {
 
 class dielectric : public material {
 public:
-    dielectric(double ri) : ref_idx(ri) {}
+    dielectric(double ri, double di) : ref_idx(ri), dis_idx(di) {}
 
     virtual bool scatter(
             const ray& r_in, const hit_record& rec, scatter_record& srec
@@ -135,11 +148,12 @@ public:
         srec.is_specular = true;
         srec.pdf_ptr = nullptr;
         srec.attenuation = const_spectrum(1.0f);
+        srec.mat_type = diel;
 
-        double ref = ref_idx + (double)(r_in.wavelength() - MTS_WAVELENGTH_MIN)
-                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * (-0.7);
+//        double ref = ref_idx + (double)(r_in.wavelength() - MTS_WAVELENGTH_MIN)
+//                   / (double)(MTS_WAVELENGTH_MAX - MTS_WAVELENGTH_MIN) * (-dis_idx);
 
-//        double ref = J_SFH1_tbl[getIndex(r_in.wavelength())];
+        double ref = J_SFH1_tbl[getIndex(r_in.wavelength())];
 
         double etai_over_etat = (rec.front_face) ? (1.0 / ref) : (ref);
 
@@ -186,6 +200,7 @@ public:
     };
 
     double ref_idx;
+    double dis_idx;
 };
 
 class isotropic : public material{

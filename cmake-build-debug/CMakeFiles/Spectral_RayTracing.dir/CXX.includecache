@@ -1349,6 +1349,8 @@ omp.h
 -
 iomanip
 -
+world.h
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/world.h
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/src/material.h
 texture.h
@@ -1427,6 +1429,8 @@ iostream
 -
 ../Eigen/Dense
 D:/UEC/UECRayTracing/Spectral_RayTracing/Eigen/Dense
+
+D:/UEC/UECRayTracing/Spectral_RayTracing/src/world.h
 
 D:/UEC/UECRayTracing/Spectral_RayTracing/stb-master/stb_image.h
 stb_image.h
