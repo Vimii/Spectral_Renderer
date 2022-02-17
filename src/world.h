@@ -15,7 +15,7 @@ hittable_list cornell_box(camera& cam, double aspect) {
     auto white = make_shared<lambertian>(make_shared<solid_color>(spectrum(1.0)));
     auto green = make_shared<lambertian>(make_shared<solid_color>(stospec(green_data)));
     auto light = make_shared<diffuse_light>(make_shared<solid_color>(D65*0.01));
-    auto glass = make_shared<dielectric>(1.5,0);
+    auto glass = make_shared<dielectric>(1.5);
 
     for (int i = 0; i < SAMPLE_NUM; ++i) {
         std::cout << std::setprecision(10) << stospec(red_data)[i] << std::endl;
@@ -101,7 +101,7 @@ hittable_list cornell_box(camera& cam, double aspect, double t_ratio) {
     world.add(make_shared<box>(point3(0,450,0), point3(260,550,555), white));
     world.add(make_shared<box>(point3(270,450,0), point3(555,550,555), white));
 
-    auto glass = make_shared<dielectric>(1.5, 1);
+    auto glass = make_shared<dielectric>(1.5);
     shared_ptr<hittable> box1 = make_shared<box>(point3(0,0,0), point3(200,100,100), glass);
     box1 = make_shared<rotate_x>(box1, 20 * (1 - t_ratio) + 70 * t_ratio);
     box1 = make_shared<rotate_y>(box1, 90);
