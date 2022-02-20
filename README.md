@@ -1,5 +1,7 @@
 # Spectral_Renderer
+![2_17_15_27_0](https://user-images.githubusercontent.com/61103348/154852896-b9c26aa6-db55-4c91-a4f8-68cf59eac0d0.jpg)
 レイに波長情報を持たせたCPUベースのレイトレーサーです。
+
 
 
 [RayTracing in One Weekend Series](https://raytracing.github.io/books/RayTracingInOneWeekend.html)の発展形です。
