@@ -10,6 +10,7 @@
 
 Objファイルを読み込めます。（マテリアルは非対応）
 
+`main.cpp`のworldを、world.hの中にあるものに変えて遊んでください。詳しい取り扱いは週末レイトレを参照ください。
 
 ## Dependence
   [mingw-w64 x86_64-8.1.0-posix-seh](https://www.mingw-w64.org)
